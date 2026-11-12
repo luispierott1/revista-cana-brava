@@ -61,6 +61,7 @@ img{max-width:100%;height:auto;display:block}
 .art-capa figcaption,.corpo figcaption{font:400 13px/1.5 var(--sans);color:var(--mute);margin-top:8px}
 .corpo{padding-top:34px;padding-bottom:20px}
 .corpo>*{margin:0 0 1.15em}
+.corpo p,.corpo li{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
 .corpo p:first-of-type::first-letter{font:800 4.1em/0.82 var(--serif-tit);float:left;margin:.06em .1em 0 0;color:var(--cana-esc)}
 .corpo h2{font:800 30px/1.15 var(--serif-tit);margin:1.7em 0 .6em;letter-spacing:-.01em}
 .corpo h3{font:700 23px/1.2 var(--serif-tit);margin:1.5em 0 .5em}
