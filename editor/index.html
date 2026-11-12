@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Editor — Cana Brava</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--tinta:#151412;--creme:#F2EEE3;--papel:#FAF8F2;--cana:#E9A23B;--cana-esc:#B9741A;--mute:#7a7468;--linha:#e2dccd;--ok:#2f7d4a;--erro:#b3372f}
+*{box-sizing:border-box}
+body{margin:0;background:#efebe1;color:var(--tinta);font:15px/1.5 Inter,system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+.barra{position:sticky;top:0;z-index:5;background:var(--tinta);color:var(--creme);display:flex;align-items:center;gap:10px;padding:10px 16px;flex-wrap:wrap;border-bottom:4px solid var(--cana)}
+.barra img{height:34px}
+.barra .tit{font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,238,227,.6);margin-right:auto}
+.barra button{background:transparent;border:1px solid rgba(242,238,227,.25);color:var(--creme);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:600;font-size:13px}
+.barra button:hover{border-color:var(--cana);color:var(--cana)}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;max-width:1280px;margin:0 auto;padding:20px}
+@media(max-width:980px){.app{grid-template-columns:1fr}}
+.folha{background:var(--papel);border:1px solid var(--linha);border-radius:10px;padding:34px 40px 50px;min-width:0}
+@media(max-width:600px){.folha{padding:22px 18px 40px}.app{padding:12px}}
+.lateral{display:flex;flex-direction:column;gap:16px}
+.box{background:#fff;border:1px solid var(--linha);border-radius:10px;padding:16px}
+.box h3{margin:0 0 10px;font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--cana-esc)}
+label{display:block;font-size:12px;font-weight:600;color:var(--mute);margin:12px 0 4px}
+label:first-of-type{margin-top:0}
+input[type=text],input[type=date],input[type=password],select,textarea{width:100%;border:1px solid var(--linha);background:#fff;border-radius:8px;padding:8px 10px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--cana)}
+.hint{font-size:12px;color:var(--mute);margin-top:6px;line-height:1.45}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;border:1px solid var(--tinta);background:#fff;border-radius:8px;padding:9px 12px;font-weight:600;font-size:13px;cursor:pointer;width:100%}
+.btn:hover{background:var(--tinta);color:var(--creme)}
+.btn.prim{background:var(--cana);border-color:var(--cana);color:var(--tinta)}
+.btn.prim:hover{background:var(--cana-esc);border-color:var(--cana-esc)}
+.btn.perigo{border-color:var(--erro);color:var(--erro)}
+.btn.perigo:hover{background:var(--erro);color:#fff}
+.btn:disabled{opacity:.5;cursor:wait}
+.f-rot{font:600 12px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--cana-esc);margin-bottom:10px}
+.f-tit,.f-fina{width:100%;border:0;background:transparent;outline:none;resize:none;overflow:hidden;padding:0;display:block}
+.f-tit{font:800 clamp(30px,4.5vw,50px)/1.05 Fraunces,serif;letter-spacing:-.02em;margin-bottom:12px}
+.f-fina{font:400 21px/1.45 'Source Serif 4',serif;color:#4a453c;margin-bottom:18px}
+.f-tit::placeholder,.f-fina::placeholder{color:#bdb6a6}
+.capa{border:1.5px dashed var(--linha);border-radius:8px;margin:8px 0 6px;min-height:70px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--mute);font-size:13px;position:relative;overflow:hidden;background:#f6f3eb center/cover no-repeat}
+.capa.tem{min-height:260px;border-style:solid}
+.capa.tem span{display:none}
+.capa input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.capa .rm{position:absolute;top:8px;right:8px;z-index:2;display:none;background:var(--tinta);color:#fff;border:0;border-radius:999px;padding:4px 10px;font-size:12px;cursor:pointer}
+.capa.tem .rm{display:block}
+.legcapa{border:0;border-bottom:1px solid var(--linha);background:transparent;width:100%;font-size:13px;color:var(--mute);padding:4px 0;outline:none;margin-bottom:18px}
+.tools{position:sticky;top:58px;z-index:4;display:flex;flex-wrap:wrap;gap:4px;background:var(--papel);padding:8px 0;border-bottom:1px solid var(--linha);margin-bottom:6px}
+.tools button{border:1px solid var(--linha);background:#fff;border-radius:6px;min-width:34px;height:32px;padding:0 9px;cursor:pointer;font-size:13px}
+.tools button:hover{border-color:var(--cana)}
+.tools .sep{width:1px;background:var(--linha);margin:0 4px}
+#corpo{min-height:420px;outline:none;font:400 19px/1.65 'Source Serif 4',serif;padding:14px 0}
+#corpo:empty::before{content:"Escreva ou cole o texto do artigo aqui…";color:#bdb6a6}
+#corpo p{margin:0 0 1em}
+#corpo h2{font:800 28px/1.15 Fraunces,serif;margin:1.4em 0 .5em}
+#corpo h3{font:700 22px/1.2 Fraunces,serif;margin:1.2em 0 .4em}
+#corpo blockquote{margin:1.2em 0;padding-left:20px;border-left:4px solid var(--cana);font:italic 500 23px/1.4 Fraunces,serif}
+#corpo a{color:var(--cana-esc)}
+#corpo figure{margin:1.4em 0}
+#corpo figcaption{font:13px Inter,sans-serif;color:var(--mute);margin-top:6px}
+#corpo img{max-width:100%;display:block}
+#corpo hr{border:0;border-top:2px dotted var(--cana);margin:2em 30%}
+.contador{font:12px 'IBM Plex Mono',monospace;color:var(--mute);text-align:right;margin-top:6px}
+.contador.alerta{color:var(--erro)}
+.status{font-size:13px;padding:10px 12px;border-radius:8px;background:#f4f1e8;margin-top:10px;display:none;line-height:1.45;word-break:break-word}
+.status.on{display:block}
+.status.ok{background:#e7f3ea;color:var(--ok)}
+.status.erro{background:#f8e6e4;color:var(--erro)}
+.status a{color:inherit;font-weight:700}
+.tag-edit{display:inline-block;font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;background:var(--cana);color:var(--tinta);padding:3px 8px;border-radius:4px;margin-bottom:12px}
+.modal{position:fixed;inset:0;z-index:20;background:rgba(21,20,18,.6);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+.modal.on{display:flex}
+.modal .card{background:#fff;border-radius:12px;width:100%;max-width:640px;padding:22px 22px 26px;position:relative}
+.modal.larga .card{max-width:1000px;padding:0;overflow:hidden}
+.modal h2{font:800 26px Fraunces,serif;margin:0 0 6px}
+.modal .fechar{position:absolute;top:12px;right:12px;width:auto;border:0;background:#f1ede3;border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:600;z-index:2}
+.lista-art{margin-top:14px}
+.lista-art .item{display:flex;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--linha)}
+.lista-art .item div{flex:1;min-width:0}
+.lista-art .item b{display:block;font:700 17px/1.25 Fraunces,serif}
+.lista-art .item small{color:var(--mute)}
+.lista-art .item button{width:auto;flex:none}
+iframe.prev{width:100%;height:80vh;border:0;display:block}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--tinta);color:var(--creme);padding:10px 16px;border-radius:999px;font-weight:600;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:30}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="barra">
+  <img src="../assets/logo-light.png" alt="Cana Brava">
+  <span class="tit">Editor</span>
+  <button id="bNovo">Novo artigo</button>
+  <button id="bLista">Publicados</button>
+  <button id="bConfig">Configurar</button>
+</div>
+
+<div class="app">
+  <section class="folha">
+    <div id="modoEdit" class="tag-edit" style="display:none">Editando artigo publicado</div>
+    <div class="f-rot" id="fRot">Editoria</div>
+    <textarea class="f-tit" id="fTit" rows="1" placeholder="Título do artigo"></textarea>
+    <textarea class="f-fina" id="fFina" rows="1" placeholder="Linha fina (opcional)"></textarea>
+    <div class="capa" id="capa"><span>＋ Imagem de capa (opcional)</span><input type="file" id="fCapa" accept="image/*"><button class="rm" id="bCapaRm" type="button">Remover</button></div>
+    <input class="legcapa" id="fCapaLeg" placeholder="Legenda / crédito da imagem de capa (opcional)">
+    <div class="tools" id="tools">
+      <button data-c="bold" title="Negrito"><b>B</b></button>
+      <button data-c="italic" title="Itálico"><i>I</i></button>
+      <span class="sep"></span>
+      <button data-b="p" title="Parágrafo">¶</button>
+      <button data-b="h2" title="Intertítulo">T1</button>
+      <button data-b="h3" title="Subintertítulo">T2</button>
+      <button data-b="blockquote" title="Citação em destaque">“ ”</button>
+      <span class="sep"></span>
+      <button data-c="insertUnorderedList" title="Lista">• Lista</button>
+      <button data-c="insertOrderedList" title="Lista numerada">1. Lista</button>
+      <button id="tLink" title="Link">Link</button>
+      <button id="tImg" title="Imagem">Imagem</button>
+      <button id="tHr" title="Separador">• • •</button>
+      <input type="file" id="fImgCorpo" accept="image/*" hidden>
+    </div>
+    <div id="corpo" contenteditable="true"></div>
+    <div class="contador" id="cCorpo">0 palavras</div>
+  </section>
+
+  <aside class="lateral">
+    <div class="box">
+      <h3>Publicação</h3>
+      <label for="sAutor">Autor</label>
+      <select id="sAutor"></select>
+      <input type="text" id="iAutorNovo" placeholder="Nome do novo autor" style="display:none;margin-top:6px">
+      <div class="row">
+        <div><label for="sGenero">Gênero</label><select id="sGenero"></select></div>
+        <div><label for="iData">Data</label><input type="date" id="iData"></div>
+      </div>
+      <input type="text" id="iGeneroNovo" placeholder="Digite o gênero" style="display:none;margin-top:6px">
+      <label for="sEditoria">Editoria</label>
+      <select id="sEditoria"></select>
+      <input type="text" id="iEditoriaNova" placeholder="Nome da nova editoria" style="display:none;margin-top:6px">
+      <label for="iSlug">Endereço do artigo</label>
+      <input type="text" id="iSlug" placeholder="gerado a partir do título">
+      <div class="hint" id="hSlug">…/artigos/<b>endereco</b>/</div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn" id="bPrev">Pré-visualizar</button>
+        <button class="btn prim" id="bPub">Publicar</button>
+      </div>
+      <button class="btn perigo" id="bDespub" style="display:none;margin-top:8px">Despublicar</button>
+      <div class="status" id="stPub"></div>
+      <div class="hint">O rascunho fica salvo automaticamente neste navegador.</div>
+    </div>
+
+    <div class="box">
+      <h3>Legenda do Instagram</h3>
+      <div class="row">
+        <button class="btn" id="bResAuto">Resumo automático</button>
+        <button class="btn" id="bResIA">Resumir com IA</button>
+      </div>
+      <div class="hint" id="hIA"></div>
+      <div class="row">
+        <div><label for="iAlvo">Tamanho-alvo</label><input type="text" id="iAlvo" value="1000" inputmode="numeric"></div>
+      </div>
+      <label for="iDeixa">Deixa final</label>
+      <input type="text" id="iDeixa" value="Leia o artigo completo em nosso site acessando o link da bio.">
+      <label for="iLegenda">Legenda (editável)</label>
+      <textarea id="iLegenda" rows="12"></textarea>
+      <div class="contador" id="cLeg">0</div>
+      <button class="btn prim" id="bCopiar" style="margin-top:8px">Copiar legenda</button>
+    </div>
+  </aside>
+</div>
+
+<div class="modal" id="mConfig"><div class="card">
+  <button class="fechar" data-fechar>Fechar</button>
+  <h2>Configurar</h2>
+  <div class="hint" style="margin-bottom:10px">Tudo fica salvo só neste navegador. Repita em cada aparelho que for usar.</div>
+  <label for="cToken">Chave de acesso do GitHub</label>
+  <input type="password" id="cToken" placeholder="github_pat_…" autocomplete="off">
+  <div class="hint">Fine-grained token com permissão <b>Contents: Read and write</b> apenas no repositório da revista.</div>
+  <div class="row">
+    <div><label for="cRepo">Repositório</label><input type="text" id="cRepo"></div>
+    <div><label for="cBranch">Branch</label><input type="text" id="cBranch"></div>
+  </div>
+  <label for="cSite">Endereço do site</label>
+  <input type="text" id="cSite">
+  <label for="cAI">Chave da API da Anthropic (opcional, para o resumo com IA)</label>
+  <input type="password" id="cAI" placeholder="sk-ant-…" autocomplete="off">
+  <label for="cModel">Modelo</label>
+  <input type="text" id="cModel">
+  <div class="row" style="margin-top:16px">
+    <button class="btn" id="bTestar">Testar conexão</button>
+    <button class="btn prim" id="bSalvarCfg">Salvar</button>
+  </div>
+  <div class="status" id="stCfg"></div>
+</div></div>
+
+<div class="modal" id="mLista"><div class="card">
+  <button class="fechar" data-fechar>Fechar</button>
+  <h2>Artigos publicados</h2>
+  <div class="lista-art" id="listaArt">Carregando…</div>
+</div></div>
+
+<div class="modal larga" id="mPrev"><div class="card">
+  <button class="fechar" data-fechar>Fechar</button>
+  <iframe class="prev" id="frPrev" title="Pré-visualização"></iframe>
+</div></div>
+
+<div id="toast"></div>
+
+<script>
+/* ========== utilidades ========== */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const slugify=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,70).replace(/-+$/,'');
+const hoje=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+const dataBR=iso=>{try{return new Date(iso+'T12:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'})}catch(e){return iso}};
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2600)}
+function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+function status(el,msg,tipo){el.className='status on'+(tipo?' '+tipo:'');el.innerHTML=msg}
+function utf8b64(str){const b=new TextEncoder().encode(str);let s='';for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s)}
+function b64utf8(b){const bin=atob(b.replace(/\n/g,''));const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder().decode(u)}
+function autoGrow(el){el.style.height='auto';el.style.height=el.scrollHeight+'px'}
+
+/* ========== configuração ========== */
+const CFG_PADRAO={token:'',repo:'luispierott1/revista-cana-brava',branch:'main',site:'https://luispierott1.github.io/revista-cana-brava/',ai:'',model:'claude-haiku-5-5'};
+let CFG={...CFG_PADRAO,...(ls('cb-config')||{})};
+const siteBase=()=>CFG.site.replace(/\/?$/,'/');
+const rawBase=slug=>`https://raw.githubusercontent.com/${CFG.repo}/${CFG.branch}/artigos/${slug}/`;
+
+/* ========== GitHub ========== */
+async function gh(path,opt={}){
+  if(!CFG.token)throw new Error('Configure a chave de acesso do GitHub primeiro (botão Configurar).');
+  const r=await fetch('https://api.github.com/repos/'+CFG.repo+path,{...opt,headers:{'Authorization':'Bearer '+CFG.token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(opt.body?{'Content-Type':'application/json'}:{})}});
+  if(r.status===404&&opt.allow404)return null;
+  if(!r.ok){let m='';try{m=(await r.json()).message}catch(e){}
+    if(r.status===401)throw new Error('Chave do GitHub inválida ou expirada.');
+    if(r.status===403)throw new Error('A chave não tem permissão de escrita neste repositório. '+m);
+    if(r.status===404)throw new Error('Repositório não encontrado: '+CFG.repo);
+    throw new Error('GitHub '+r.status+': '+m)}
+  return r.status===204?null:r.json();
+}
+async function lerArquivo(path){
+  const j=await gh('/contents/'+path.split('/').map(encodeURIComponent).join('/')+'?ref='+encodeURIComponent(CFG.branch)+'&t='+Date.now(),{allow404:true});
+  return j?b64utf8(j.content):null;
+}
+async function listarPasta(path){
+  const j=await gh('/contents/'+path+'?ref='+encodeURIComponent(CFG.branch)+'&t='+Date.now(),{allow404:true});
+  return Array.isArray(j)?j.map(f=>f.path):[];
+}
+async function commit(arquivos,msg){
+  const ref=await gh('/git/ref/heads/'+CFG.branch);
+  const base=await gh('/git/commits/'+ref.object.sha);
+  const tree=[];
+  for(const f of arquivos){
+    if(f.apagar)tree.push({path:f.path,mode:'100644',type:'blob',sha:null});
+    else if(f.base64){const b=await gh('/git/blobs',{method:'POST',body:JSON.stringify({content:f.base64,encoding:'base64'})});tree.push({path:f.path,mode:'100644',type:'blob',sha:b.sha})}
+    else tree.push({path:f.path,mode:'100644',type:'blob',content:f.conteudo});
+  }
+  const t=await gh('/git/trees',{method:'POST',body:JSON.stringify({base_tree:base.tree.sha,tree})});
+  const c=await gh('/git/commits',{method:'POST',body:JSON.stringify({message:msg,tree:t.sha,parents:[ref.object.sha]})});
+  await gh('/git/refs/heads/'+CFG.branch,{method:'PATCH',body:JSON.stringify({sha:c.sha})});
+}
+async function lerIndice(){const t=await lerArquivo('data/artigos.json');try{return t?JSON.parse(t):[]}catch(e){return[]}}
+
+/* ========== listas (autor, gênero, editoria) ========== */
+const GENEROS=['Coluna','Opinião','Análise','Reportagem','Entrevista','Crônica','Editorial'];
+const EDITORIAS=['Política','Bastidores','Cidade','Economia','Cultura'];
+let indice=[];
+function preencherSelect(sel,itens,valor,rotNovo){
+  const lista=[...new Set(itens.filter(Boolean))];
+  sel.innerHTML=lista.map(v=>`<option>${esc(v)}</option>`).join('')+`<option value="__novo">${rotNovo}</option>`;
+  if(valor&&!lista.includes(valor)){sel.value='__novo'}else sel.value=valor||lista[0]||'__novo';
+}
+function montarSelects(estado){
+  const autores=indice.map(a=>a.autor).concat(ls('cb-autores')||[]);
+  preencherSelect($('sAutor'),autores,estado.autor,autores.length?'Novo autor…':'Digitar nome do autor…');
+  preencherSelect($('sGenero'),GENEROS,estado.genero||'Coluna','Outro…');
+  preencherSelect($('sEditoria'),EDITORIAS.concat(indice.map(a=>a.editoria)),estado.editoria||'Política','Nova editoria…');
+  [['sAutor','iAutorNovo','autor'],['sGenero','iGeneroNovo','genero'],['sEditoria','iEditoriaNova','editoria']].forEach(([s,i,k])=>{
+    const novo=$(s).value==='__novo';$(i).style.display=novo?'block':'none';if(novo)$(i).value=estado[k]||''});
+}
+const valorSel=(s,i)=>$(s).value==='__novo'?$(i).value.trim():$(s).value;
+
+/* ========== estado do artigo ========== */
+let editando=null; // slug original quando editando publicado
+let capa=null;     // {src: dataURL ou URL, nome: 'capa.jpg' se já publicada}
+function estadoAtual(){
+  return{titulo:$('fTit').value.trim(),linhaFina:$('fFina').value.trim(),corpo:$('corpo').innerHTML,
+    autor:valorSel('sAutor','iAutorNovo'),genero:valorSel('sGenero','iGeneroNovo'),editoria:valorSel('sEditoria','iEditoriaNova'),
+    data:$('iData').value||hoje(),slug:$('iSlug').value.trim(),capa,capaLegenda:$('fCapaLeg').value.trim(),
+    legenda:$('iLegenda').value,alvo:$('iAlvo').value,deixa:$('iDeixa').value,editando};
+}
+function carregarEstado(e){
+  editando=e.editando||null;capa=e.capa||null;
+  $('fTit').value=e.titulo||'';$('fFina').value=e.linhaFina||'';$('corpo').innerHTML=e.corpo||'';
+  $('iData').value=e.data||hoje();$('iSlug').value=e.slug||'';$('fCapaLeg').value=e.capaLegenda||'';
+  $('iLegenda').value=e.legenda||'';if(e.alvo)$('iAlvo').value=e.alvo;if(e.deixa)$('iDeixa').value=e.deixa;
+  montarSelects(e);atualizarTudo();
+}
+function atualizarTudo(){
+  autoGrow($('fTit'));autoGrow($('fFina'));
+  $('fRot').textContent=valorSel('sEditoria','iEditoriaNova')||'Editoria';
+  const c=$('capa');c.classList.toggle('tem',!!capa);c.style.backgroundImage=capa?`url("${capa.src}")`:'';
+  if(!editando&&!$('iSlug').dataset.manual)$('iSlug').value=slugify($('fTit').value);
+  $('iSlug').disabled=!!editando;
+  $('hSlug').innerHTML=esc(siteBase())+'artigos/<b>'+esc($('iSlug').value||'endereco')+'</b>/';
+  $('modoEdit').style.display=editando?'inline-block':'none';
+  $('bPub').textContent=editando?'Atualizar':'Publicar';
+  $('bDespub').style.display=editando?'flex':'none';
+  const txt=$('corpo').innerText.trim();$('cCorpo').textContent=(txt?txt.split(/\s+/).length:0).toLocaleString('pt-BR')+' palavras · '+Math.max(1,Math.round((txt?txt.split(/\s+/).length:0)/200))+' min de leitura';
+  contarLegenda();
+}
+let tSalvar;
+function salvarRascunho(){clearTimeout(tSalvar);tSalvar=setTimeout(()=>{if(!ls('cb-rascunho',estadoAtual()))toast('Rascunho grande demais para salvar no navegador (imagens). Publique para não perder.')},400)}
+function mudou(){atualizarTudo();salvarRascunho()}
+
+['fTit','fFina','fCapaLeg','iData','iAutorNovo','iGeneroNovo','iEditoriaNova','iLegenda','iAlvo','iDeixa'].forEach(id=>$(id).addEventListener('input',mudou));
+$('iSlug').addEventListener('input',e=>{e.target.dataset.manual=e.target.value?'1':'';e.target.value=slugify(e.target.value)||e.target.value.toLowerCase();mudou()});
+[['sAutor','iAutorNovo'],['sGenero','iGeneroNovo'],['sEditoria','iEditoriaNova']].forEach(([s,i])=>$(s).addEventListener('change',()=>{const n=$(s).value==='__novo';$(i).style.display=n?'block':'none';if(n){$(i).value='';$(i).focus()}mudou()}));
+$('corpo').addEventListener('input',mudou);
+['fTit','fFina'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')e.preventDefault()}));
+
+/* ========== imagens ========== */
+function redimensionar(file,max=1600){return new Promise((ok,erro)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{
+  const s=Math.min(1,max/im.width);const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.85))};im.onerror=erro;im.src=fr.result};fr.onerror=erro;fr.readAsDataURL(file)})}
+$('fCapa').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;capa={src:await redimensionar(f,2000)};e.target.value='';mudou()});
+$('bCapaRm').addEventListener('click',e=>{e.preventDefault();capa=null;mudou()});
+
+/* ========== editor de texto ========== */
+document.execCommand('defaultParagraphSeparator',false,'p');
+$('tools').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
+$('tools').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('corpo').focus();
+  if(b.dataset.c)document.execCommand(b.dataset.c);
+  if(b.dataset.b){const atual=(document.queryCommandValue('formatBlock')||'').toLowerCase();document.execCommand('formatBlock',false,'<'+(atual===b.dataset.b&&b.dataset.b!=='p'?'p':b.dataset.b)+'>')}
+  mudou()});
+$('tLink').addEventListener('click',()=>{const sel=window.getSelection();if(!sel.rangeCount||sel.isCollapsed){toast('Selecione o trecho que vai virar link');return}
+  const r=sel.getRangeAt(0);const url=window.prompt('Endereço do link (https://…). Deixe vazio para remover:','https://');
+  sel.removeAllRanges();sel.addRange(r);
+  if(url===null)return;if(!url.trim()||url.trim()==='https://')document.execCommand('unlink');else document.execCommand('createLink',false,url.trim());mudou()});
+$('tHr').addEventListener('click',()=>{$('corpo').focus();document.execCommand('insertHTML',false,'<hr><p><br></p>');mudou()});
+let rangeImg=null;
+$('tImg').addEventListener('click',()=>{const s=window.getSelection();rangeImg=s.rangeCount?s.getRangeAt(0):null;$('fImgCorpo').click()});
+$('fImgCorpo').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const src=await redimensionar(f);e.target.value='';
+  $('corpo').focus();if(rangeImg){const s=window.getSelection();s.removeAllRanges();s.addRange(rangeImg)}
+  document.execCommand('insertHTML',false,`<figure><img src="${src}" alt=""><figcaption>Legenda da imagem</figcaption></figure><p><br></p>`);mudou()});
+$('corpo').addEventListener('paste',e=>{e.preventDefault();
+  const t=(e.clipboardData||window.clipboardData).getData('text/plain').replace(/\r/g,'');
+  const blocos=t.split(/\n\s*\n/).map(b=>b.trim()).filter(Boolean);
+  let html;
+  if(blocos.length<=1&&!t.includes('\n'))html=esc(t);
+  else{const linhas=blocos.length>1?blocos:t.split('\n').map(s=>s.trim()).filter(Boolean);html=linhas.map(b=>'<p>'+esc(b).replace(/\n/g,'<br>')+'</p>').join('')}
+  document.execCommand('insertHTML',false,html);mudou()});
+
+/* ========== limpeza do HTML ========== */
+const PERMITIDAS={P:1,H2:1,H3:1,BLOCKQUOTE:1,UL:1,OL:1,LI:1,STRONG:1,EM:1,A:1,IMG:1,FIGURE:1,FIGCAPTION:1,BR:1,HR:1};
+const TROCA={B:'strong',I:'em',DIV:'p',H1:'h2',H4:'h3',H5:'h3',H6:'h3'};
+function limpar(html){
+  const d=document.createElement('div');d.innerHTML=html;
+  (function walk(no){[...no.childNodes].forEach(n=>{
+    if(n.nodeType===3)return;
+    if(n.nodeType!==1){n.remove();return}
+    walk(n);
+    let el=n;
+    if(TROCA[el.tagName]){const novo=document.createElement(TROCA[el.tagName]);while(el.firstChild)novo.appendChild(el.firstChild);el.replaceWith(novo);el=novo}
+    if(!PERMITIDAS[el.tagName]){const f=document.createDocumentFragment();while(el.firstChild)f.appendChild(el.firstChild);el.replaceWith(f);return}
+    [...el.attributes].forEach(a=>{const ok=(el.tagName==='A'&&a.name==='href')||(el.tagName==='IMG'&&(a.name==='src'||a.name==='alt'));if(!ok)el.removeAttribute(a.name)});
+    if(el.tagName==='A'){const h=el.getAttribute('href')||'';if(!/^(https?:|mailto:)/i.test(h))el.removeAttribute('href');else{el.setAttribute('target','_blank');el.setAttribute('rel','noopener')}}
+    if(el.tagName==='P'&&!el.textContent.trim()&&!el.querySelector('img'))el.remove();
+  })})(d);
+  return d.innerHTML.trim();
+}
+
+/* ========== modelo da página do artigo ========== */
+const js=v=>JSON.stringify(v).replace(/</g,'\\u003c');
+function paginaArtigo(a,base){
+  const url=base+'artigos/'+a.slug+'/';
+  const og=a.capa?url+a.capa:base+'assets/og.png';
+  const desc=a.linhaFina||a.resumo||'';
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(a.titulo)} — Cana Brava</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${esc(url)}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Cana Brava">
+<meta property="og:title" content="${esc(a.titulo)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:url" content="${esc(url)}">
+<meta property="og:image" content="${esc(og)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="${esc(a.autor)}">
+<meta property="article:published_time" content="${esc(a.data)}">
+<link rel="icon" href="../../assets/favicon.png">
+<link rel="apple-touch-icon" href="../../assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="topo"><div class="wrap">
+  <a class="marca" href="../../"><img src="../../assets/logo-light.png" alt="Cana Brava"></a>
+  <nav><a href="../../">Início</a><a href="../../?editoria=${encodeURIComponent(a.editoriaSlug)}">${esc(a.editoria)}</a></nav>
+</div></header>
+<main>
+<article>
+  <header class="art-cab wrap estreito">
+    <a class="rotulo" href="../../?editoria=${encodeURIComponent(a.editoriaSlug)}" style="text-decoration:none">${esc(a.editoria)}</a>
+    <h1>${esc(a.titulo)}</h1>
+    ${a.linhaFina?`<p class="fina">${esc(a.linhaFina)}</p>`:''}
+    <div class="byline">
+      <span class="autor"><em>por</em><a href="../../?autor=${encodeURIComponent(a.autorSlug)}">${esc(a.autor)}</a></span>
+      <span class="meta">${esc(a.genero)} · ${esc(dataBR(a.data))} · ${a.leitura} min de leitura</span>
+    </div>
+  </header>
+  ${a.capa?`<figure class="art-capa wrap"><img src="${esc(a.capa)}" alt="">${a.capaLegenda?`<figcaption>${esc(a.capaLegenda)}</figcaption>`:''}</figure>`:''}
+  <div class="corpo wrap estreito">
+${a.corpo}
+  </div>
+  <div class="wrap estreito">
+    <div class="compartilhar">
+      <a class="btn" id="zap" href="https://wa.me/?text=${encodeURIComponent(a.titulo+' '+url)}" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+      <button class="btn" id="copiar" type="button">Copiar link</button>
+    </div>
+  </div>
+</article>
+<section class="wrap mais" id="mais"></section>
+</main>
+<footer class="rodape"><div class="wrap">
+  <img src="../../assets/logo-light.png" alt="Cana Brava">
+  <div>Revista semanal de Campos dos Goytacazes.</div>
+</div></footer>
+<script>
+(function(){
+var c=document.querySelector('.corpo');var ps=c.querySelectorAll('p');if(ps.length){var f=document.createElement('span');f.className='fim';ps[ps.length-1].appendChild(f)}
+document.getElementById('copiar').onclick=function(){var b=this;try{navigator.clipboard.writeText(location.href.split('#')[0]).then(function(){b.textContent='Link copiado'})}catch(e){}};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+fetch('../../data/artigos.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(l){
+  var eu=${js(a.slug)},autor=${js(a.autorSlug)};
+  var m=l.filter(function(x){return x.autorSlug===autor&&x.slug!==eu}).slice(0,3),tit='Mais de '+${js(a.autor)};
+  if(!m.length){m=l.filter(function(x){return x.slug!==eu}).slice(0,3);tit='Leia também'}
+  if(!m.length)return;
+  document.getElementById('mais').innerHTML='<div class="secao-tit"><h2>'+esc(tit)+'</h2></div><div class="grade">'+m.map(function(x){
+    return '<a class="card" href="../'+encodeURIComponent(x.slug)+'/">'+(x.capa?'<div class="img" style="background-image:url(\\'../'+encodeURIComponent(x.slug)+'/'+esc(x.capa)+'\\')"></div>':'')+'<span class="rotulo">'+esc(x.editoria)+'</span><h3>'+esc(x.titulo)+'</h3>'+(x.linhaFina?'<p>'+esc(x.linhaFina)+'</p>':'')+'<span class="meta"><b>'+esc(x.autor)+'</b> · '+esc(x.genero)+'</span></a>'}).join('')+'</div>';
+}).catch(function(){});
+})();
+<\/script>
+</body>
+</html>
+`;}
+
+/* ========== montar artigo para publicar ========== */
+function validar(e){
+  const f=[];if(!e.titulo)f.push('título');if(!e.autor)f.push('autor');if(!e.editoria)f.push('editoria');if(!e.genero)f.push('gênero');
+  if(!$('corpo').innerText.trim())f.push('texto');if(!e.slug)f.push('endereço');
+  if(f.length)throw new Error('Falta preencher: '+f.join(', ')+'.');
+}
+async function montar(e,slug){
+  const arquivos=[];let n=0;
+  const d=document.createElement('div');d.innerHTML=limpar(e.corpo);
+  const rb=rawBase(slug),sb=siteBase()+'artigos/'+slug+'/';
+  const usados=new Set();
+  for(const img of d.querySelectorAll('img')){
+    const src=img.getAttribute('src')||'';
+    if(src.startsWith('data:')){
+      let nome;do{nome='img-'+(++n)+'.jpg'}while(usados.has(nome));
+      arquivos.push({path:`artigos/${slug}/${nome}`,base64:src.split(',')[1],dataURL:src});img.setAttribute('src',nome);usados.add(nome);
+    }else if(src.startsWith(rb)||src.startsWith(sb)){const nome=src.split('/').pop();img.setAttribute('src',nome);usados.add(nome);n=Math.max(n,parseInt((nome.match(/\d+/)||[0])[0],10)||0)}
+    else if(!/^https?:/.test(src)){usados.add(src)}
+  }
+  let capaNome=null;
+  if(e.capa){if(e.capa.src.startsWith('data:')){capaNome='capa-'+Date.now().toString(36)+'.jpg';arquivos.push({path:`artigos/${slug}/${capaNome}`,base64:e.capa.src.split(',')[1],dataURL:e.capa.src})}else capaNome=e.capa.nome}
+  if(capaNome)usados.add(capaNome);
+  const texto=d.innerText||d.textContent||'';
+  const palavras=texto.trim().split(/\s+/).filter(Boolean).length;
+  const a={slug,titulo:e.titulo,linhaFina:e.linhaFina,autor:e.autor,autorSlug:slugify(e.autor),genero:e.genero,editoria:e.editoria,editoriaSlug:slugify(e.editoria),
+    data:e.data,capa:capaNome,capaLegenda:e.capaLegenda,corpo:d.innerHTML,leitura:Math.max(1,Math.round(palavras/200)),
+    resumo:texto.replace(/\s+/g,' ').trim().slice(0,220),publicadoEm:new Date().toISOString(),legenda:e.legenda};
+  return{a,arquivos,usados};
+}
+const entradaIndice=a=>({slug:a.slug,titulo:a.titulo,linhaFina:a.linhaFina,autor:a.autor,autorSlug:a.autorSlug,genero:a.genero,editoria:a.editoria,editoriaSlug:a.editoriaSlug,data:a.data,capa:a.capa,resumo:a.resumo,publicadoEm:a.publicadoEm});
+
+/* ========== publicar ========== */
+$('bPub').addEventListener('click',async()=>{
+  const b=$('bPub'),st=$('stPub');const e=estadoAtual();
+  try{
+    validar(e);
+    b.disabled=true;status(st,'Enviando para o GitHub…');
+    const idx=await lerIndice();
+    let slug=editando||e.slug;
+    if(!editando){let s=slug,i=2;while(idx.some(x=>x.slug===s))s=slug+'-'+(i++);slug=s}
+    const {a,arquivos,usados}=await montar(e,slug);
+    const antigo=idx.find(x=>x.slug===slug);if(antigo&&editando)a.publicadoEm=antigo.publicadoEm;
+    const novoIdx=idx.filter(x=>x.slug!==slug);novoIdx.push(entradaIndice(a));
+    novoIdx.sort((x,y)=>(y.data+y.publicadoEm).localeCompare(x.data+x.publicadoEm));
+    const lista=[...arquivos.map(({path,base64})=>({path,base64})),
+      {path:`artigos/${slug}/index.html`,conteudo:paginaArtigo(a,siteBase())},
+      {path:`artigos/${slug}/artigo.json`,conteudo:JSON.stringify(a,null,1)},
+      {path:'data/artigos.json',conteudo:JSON.stringify(novoIdx,null,1)}];
+    if(editando){const ex=await listarPasta('artigos/'+slug);const manter=new Set(lista.map(f=>f.path));
+      ex.forEach(p=>{const nome=p.split('/').pop();if(!manter.has(p)&&!usados.has(nome))lista.push({path:p,apagar:true})})}
+    await commit(lista,(editando?'Atualiza: ':'Publica: ')+a.titulo);
+    const url=siteBase()+'artigos/'+slug+'/';
+    status(st,`${editando?'Atualizado':'Publicado'}! Fica no ar em cerca de 1 minuto:<br><a href="${esc(url)}" target="_blank" rel="noopener">${esc(url)}</a>`,'ok');
+    const aut=ls('cb-autores')||[];if(!aut.includes(a.autor)){aut.push(a.autor);ls('cb-autores',aut)}
+    indice=novoIdx;
+    // passa a editar a versão publicada (imagens agora apontam para o GitHub)
+    editando=slug;$('iSlug').value=slug;
+    if(a.capa)capa={src:rawBase(slug)+a.capa,nome:a.capa};
+    const dd=document.createElement('div');dd.innerHTML=a.corpo;dd.querySelectorAll('img').forEach(im=>{const s=im.getAttribute('src');if(!/^https?:|^data:/.test(s))im.setAttribute('src',rawBase(slug)+s)});
+    $('corpo').innerHTML=dd.innerHTML;
+    montarSelects(a);mudou();
+  }catch(err){status(st,esc(err.message),'erro')}
+  b.disabled=false;atualizarTudo();
+});
+
+/* ========== despublicar ========== */
+$('bDespub').addEventListener('click',async()=>{
+  if(!editando)return;const st=$('stPub');
+  if(!window.confirm('Tirar este artigo do site? Ele some da capa e o endereço deixa de funcionar.'))return;
+  try{
+    status(st,'Removendo…');
+    const idx=(await lerIndice()).filter(x=>x.slug!==editando);
+    const arqs=(await listarPasta('artigos/'+editando)).map(p=>({path:p,apagar:true}));
+    arqs.push({path:'data/artigos.json',conteudo:JSON.stringify(idx,null,1)});
+    await commit(arqs,'Despublica: '+editando);
+    indice=idx;status(st,'Artigo removido do site. O texto continua aqui no editor como rascunho, se quiser publicar de novo.','ok');
+    editando=null;$('iSlug').dataset.manual='';
+    if(capa&&!capa.src.startsWith('data:'))capa=null;
+    $('corpo').querySelectorAll('img').forEach(im=>{if(/^https?:/.test(im.getAttribute('src')))im.closest('figure')?.remove()||im.remove()});
+    mudou();
+  }catch(err){status(st,esc(err.message),'erro')}
+});
+
+/* ========== lista de publicados ========== */
+function abrir(id){$(id).classList.add('on')}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m||e.target.closest('[data-fechar]'))m.classList.remove('on')}));
+$('bLista').addEventListener('click',async()=>{
+  abrir('mLista');const box=$('listaArt');box.textContent='Carregando…';
+  try{indice=await lerIndice();montarSelects(estadoAtual());
+    if(!indice.length){box.innerHTML='<p class="hint">Nenhum artigo publicado ainda.</p>';return}
+    box.innerHTML=indice.map(a=>`<div class="item"><div><b>${esc(a.titulo)}</b><small>${esc(a.autor)} · ${esc(a.genero)} · ${esc(dataBR(a.data))}</small></div><a class="btn" style="width:auto" href="${esc(siteBase()+'artigos/'+a.slug+'/')}" target="_blank" rel="noopener">Ver</a><button class="btn prim" data-ed="${esc(a.slug)}">Editar</button></div>`).join('');
+  }catch(err){box.innerHTML='<div class="status on erro">'+esc(err.message)+'</div>'}
+});
+$('listaArt').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-ed]');if(!b)return;
+  const atual=estadoAtual();if((atual.titulo||$('corpo').innerText.trim())&&!window.confirm('Abrir este artigo vai substituir o que está no editor agora. Continuar?'))return;
+  b.disabled=true;b.textContent='Abrindo…';
+  try{const txt=await lerArquivo('artigos/'+b.dataset.ed+'/artigo.json');if(!txt)throw new Error('Arquivo do artigo não encontrado.');
+    const a=JSON.parse(txt);const rb=rawBase(a.slug);
+    const d=document.createElement('div');d.innerHTML=a.corpo;d.querySelectorAll('img').forEach(im=>{const s=im.getAttribute('src');if(!/^https?:|^data:/.test(s))im.setAttribute('src',rb+s)});
+    carregarEstado({...a,corpo:d.innerHTML,capa:a.capa?{src:rb+a.capa,nome:a.capa}:null,editando:a.slug});
+    $('stPub').className='status';$('mLista').classList.remove('on');salvarRascunho();toast('Artigo aberto para edição');
+  }catch(err){toast(err.message);b.disabled=false;b.textContent='Editar'}
+});
+
+/* ========== novo ========== */
+$('bNovo').addEventListener('click',()=>{
+  const e=estadoAtual();if((e.titulo||$('corpo').innerText.trim())&&!window.confirm('Começar um artigo novo? O conteúdo atual do editor será apagado (o que já foi publicado continua no site).'))return;
+  $('iSlug').dataset.manual='';$('stPub').className='status';
+  carregarEstado({autor:e.autor,genero:'Coluna',editoria:e.editoria,deixa:e.deixa,alvo:e.alvo});ls('cb-rascunho',estadoAtual());window.scrollTo(0,0);$('fTit').focus();
+});
+
+/* ========== pré-visualização ========== */
+$('bPrev').addEventListener('click',async()=>{
+  const e=estadoAtual();const slug=editando||e.slug||'previa';
+  const {a,arquivos}=await montar(e,slug);
+  arquivos.forEach(f=>{const nome=f.path.split('/').pop();a.corpo=a.corpo.split(`src="${nome}"`).join(`src="${f.dataURL}"`);if(a.capa===nome)a.capa=f.dataURL});
+  let html=paginaArtigo(a,siteBase());
+  if(a.capa&&a.capa.startsWith('data:'))html=html.replace(/<meta property="og:image"[^>]*>/,'');
+  html=html.replace('<head>',`<head><base href="${esc(siteBase()+'artigos/'+slug+'/')}">`);
+  if(editando)html=html.replace(/src="(?!https?:|data:)([^"]+\.jpg)"/g,(m,n)=>`src="${rawBase(slug)+n}"`);
+  $('frPrev').srcdoc=html;abrir('mPrev');
+});
+
+/* ========== legenda ========== */
+function alvo(){const n=parseInt($('iAlvo').value,10);return isNaN(n)?1000:Math.min(Math.max(n,300),2200)}
+function cabecalhoLegenda(){const e=estadoAtual();const t=e.titulo.toUpperCase();const by=e.autor?((e.genero?e.genero+' | ':'')+'Por '+e.autor):'';return[t,by].filter(Boolean).join('\n')}
+function montarLegenda(resumo){const p=[cabecalhoLegenda()];if(resumo)p.push(resumo.trim());const d=$('iDeixa').value.trim();if(d)p.push(d);return p.filter(Boolean).join('\n\n')}
+function orcamento(){return Math.max(alvo()-cabecalhoLegenda().length-$('iDeixa').value.trim().length-4,150)}
+function contarLegenda(){const n=$('iLegenda').value.length,c=$('cLeg');c.textContent=n.toLocaleString('pt-BR')+' caracteres · alvo ~'+alvo().toLocaleString('pt-BR')+' · limite 2.200';c.classList.toggle('alerta',n>2200||n>alvo()*1.15)}
+function textoCorpo(){const d=document.createElement('div');d.innerHTML=limpar($('corpo').innerHTML);d.querySelectorAll('figure,figcaption').forEach(x=>x.remove());
+  return [...d.querySelectorAll('p,h2,h3,blockquote,li')].map(x=>x.textContent.trim()).filter(Boolean).join('\n\n')}
+function resumoAuto(texto,max){
+  const paras=texto.split(/\n\s*\n/).map(s=>s.trim()).filter(Boolean);const frases=[];
+  paras.forEach((p,pi)=>(p.match(/[^.!?…]+(?:[.!?…]+["”’»)]*|$)/g)||[p]).forEach((s,si)=>{s=s.trim();if(s)frases.push({s,np:pi>0&&si===0})}));
+  let out='';for(const {s,np} of frases){const sep=out?(np?'\n\n':' '):'';if((out+sep+s).length>max){if(!out)out=s.slice(0,max).replace(/\s+\S*$/,'')+'…';break}out+=sep+s}
+  return out;
+}
+$('bResAuto').addEventListener('click',()=>{const t=textoCorpo();if(!t){toast('Escreva o texto do artigo primeiro');return}
+  $('iLegenda').value=montarLegenda(resumoAuto(t,orcamento()));mudou();toast('Resumo automático pronto')});
+function atualizarIA(){$('hIA').innerHTML=CFG.ai?'O resumo com IA usa sua chave da Anthropic. Revise antes de copiar.':'Para usar “Resumir com IA”, cadastre a chave da API da Anthropic em <b>Configurar</b>.'}
+$('bResIA').addEventListener('click',async()=>{
+  const t=textoCorpo();if(!t){toast('Escreva o texto do artigo primeiro');return}
+  if(!CFG.ai){toast('Cadastre a chave da Anthropic em Configurar');abrir('mConfig');return}
+  const b=$('bResIA');b.disabled=true;b.textContent='Resumindo…';const max=orcamento();const e=estadoAtual();
+  const prompt=`Você escreve legendas de Instagram para a Cana Brava, uma revista semanal de Campos dos Goytacazes (RJ) sobre política local e seus bastidores, com tom jornalístico, sóbrio e inteligente, no estilo da revista piauí.
+
+Escreva um resumo do artigo abaixo para a legenda do post.
+
+Regras:
+- Português do Brasil.
+- No máximo ${max} caracteres, contando espaços. Mire entre ${Math.round(max*.85)} e ${max}.
+- Um a três parágrafos curtos, separados por linha em branco.
+- Comece com um gancho forte, sem repetir o título.
+- Use apenas informações que estão no texto. Não invente fatos, números, nomes ou citações.
+- Sem hashtags, sem emojis, sem markdown, sem aspas em volta do resumo.
+- Não escreva chamada para ler o artigo nem mencione link: isso é acrescentado depois.
+- Responda só com o resumo.
+
+Título: ${e.titulo}
+${e.linhaFina?'Linha fina: '+e.linhaFina+'\n':''}Autor: ${e.autor} (${e.genero})
+
+Artigo:
+"""
+${t}
+"""`;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':CFG.ai,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:CFG.model||'claude-haiku-5-5',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    const j=await r.json();if(!r.ok)throw new Error((j.error&&j.error.message)||('Erro '+r.status));
+    const txt=(j.content||[]).filter(c=>c.type==='text').map(c=>c.text).join('').trim();
+    $('iLegenda').value=montarLegenda(txt);mudou();toast('Resumo com IA pronto. Revise antes de copiar');
+  }catch(err){toast('Não consegui resumir: '+err.message)}
+  b.disabled=false;b.textContent='Resumir com IA';
+});
+$('bCopiar').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('iLegenda').value);toast('Legenda copiada')}catch(e){$('iLegenda').select();toast('Texto selecionado: copie com Ctrl+C')}});
+
+/* ========== configurar ========== */
+function abrirConfig(){$('cToken').value=CFG.token;$('cRepo').value=CFG.repo;$('cBranch').value=CFG.branch;$('cSite').value=CFG.site;$('cAI').value=CFG.ai;$('cModel').value=CFG.model;$('stCfg').className='status';abrir('mConfig')}
+function lerConfig(){return{token:$('cToken').value.trim(),repo:$('cRepo').value.trim()||CFG_PADRAO.repo,branch:$('cBranch').value.trim()||'main',site:$('cSite').value.trim()||CFG_PADRAO.site,ai:$('cAI').value.trim(),model:$('cModel').value.trim()||CFG_PADRAO.model}}
+$('bConfig').addEventListener('click',abrirConfig);
+$('bSalvarCfg').addEventListener('click',()=>{CFG=lerConfig();if(!ls('cb-config',CFG))status($('stCfg'),'Não consegui salvar neste navegador (modo privado?).','erro');else{status($('stCfg'),'Configuração salva.','ok');atualizarIA();atualizarTudo();carregarIndice()}});
+$('bTestar').addEventListener('click',async()=>{const ant=CFG;CFG=lerConfig();const st=$('stCfg');status(st,'Testando…');
+  try{const r=await gh('');if(!r.permissions||!r.permissions.push)throw new Error('A chave lê o repositório, mas não tem permissão de escrita (Contents: Read and write).');
+    status(st,'Conexão ok com <b>'+esc(r.full_name)+'</b>. Pode publicar. Lembre de clicar em Salvar.','ok')}catch(err){status(st,esc(err.message),'erro')}CFG=ant});
+
+/* ========== início ========== */
+async function carregarIndice(){
+  try{
+    if(CFG.token)indice=await lerIndice();
+    else{const r=await fetch('../data/artigos.json',{cache:'no-cache'});if(r.ok)indice=await r.json()}
+  }catch(e){}
+  montarSelects(estadoAtual());
+}
+carregarEstado(ls('cb-rascunho')||{genero:'Coluna',editoria:'Política'});
+atualizarIA();carregarIndice();
+if(!CFG.token)setTimeout(()=>{abrirConfig();status($('stCfg'),'Primeiro acesso: cole a chave de acesso do GitHub e clique em Testar conexão.')},300);
+</script>
+</body>
+</html>

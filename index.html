@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cana Brava — Revista de Campos dos Goytacazes</title>
+<meta name="description" content="Cana Brava: política, poder e bastidores de Campos dos Goytacazes.">
+<meta property="og:title" content="Cana Brava">
+<meta property="og:description" content="Política, poder e bastidores de Campos dos Goytacazes.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topo"><div class="wrap">
+  <a class="marca" href="./"><img src="assets/logo-light.png" alt="Cana Brava"></a>
+  <nav id="nav"><a href="./" class="on">Início</a></nav>
+</div></header>
+
+<main class="wrap" id="main"><div class="vazio">Carregando…</div></main>
+
+<footer class="rodape"><div class="wrap">
+  <img src="assets/logo-light.png" alt="Cana Brava">
+  <div>Revista semanal de Campos dos Goytacazes.<br>Siga no Instagram para receber as novas edições.</div>
+</div></footer>
+
+<script>
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dataBR=iso=>{try{return new Date(iso+'T12:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'})}catch(e){return iso}};
+const link=a=>'artigos/'+a.slug+'/';
+const bg=a=>a.capa?` style="background-image:url('artigos/${esc(a.slug)}/${esc(a.capa)}')"`:'';
+function rotulo(a){return `<span class="rotulo"><a href="?editoria=${encodeURIComponent(a.editoriaSlug)}">${esc(a.editoria)}</a></span>`}
+function meta(a){return `<span class="meta"><b>${esc(a.autor)}</b> · ${esc(a.genero)} · ${dataBR(a.data)}</span>`}
+function card(a){return `<a class="card" href="${link(a)}">${a.capa?`<div class="img"${bg(a)}></div>`:''}<span class="rotulo">${esc(a.editoria)}</span><h3>${esc(a.titulo)}</h3>${a.linhaFina?`<p>${esc(a.linhaFina)}</p>`:''}${meta(a)}</a>`}
+
+fetch('data/artigos.json',{cache:'no-cache'}).then(r=>r.json()).then(lista=>{
+  lista.sort((a,b)=>(b.data+b.publicadoEm).localeCompare(a.data+a.publicadoEm));
+  const q=new URLSearchParams(location.search);
+  const eds=[...new Map(lista.map(a=>[a.editoriaSlug,a.editoria])).entries()].slice(0,6);
+  const sel=q.get('editoria');
+  document.getElementById('nav').innerHTML=`<a href="./" class="${!q.toString()?'on':''}">Início</a>`+eds.map(([s,n])=>`<a href="?editoria=${encodeURIComponent(s)}" class="${sel===s?'on':''}">${esc(n)}</a>`).join('');
+  const main=document.getElementById('main');
+  let filtro=null,f=lista;
+  if(q.get('autor')){f=lista.filter(a=>a.autorSlug===q.get('autor'));filtro=f[0]?{r:f[0].genero==='Coluna'?'Coluna':'Autor',t:f[0].autor}:null}
+  else if(sel){f=lista.filter(a=>a.editoriaSlug===sel);filtro=f[0]?{r:'Editoria',t:f[0].editoria}:null}
+  if(!lista.length){main.innerHTML='<div class="vazio">Os primeiros artigos chegam em breve.</div>';return}
+  if(filtro){
+    document.title=filtro.t+' — Cana Brava';
+    main.innerHTML=`<div class="filtro-tit"><a class="voltar" href="./">← Início</a><div class="rotulo" style="margin-top:22px">${filtro.r}</div><h1>${esc(filtro.t)}</h1></div>
+    <div class="secao-tit"><h2>${f.length} ${f.length===1?'texto':'textos'}</h2></div><div class="grade">${f.map(card).join('')}</div>`;
+    return}
+  if(q.toString()){main.innerHTML='<div class="vazio">Nada encontrado. <a href="./">Voltar ao início</a></div>';return}
+  const [d,...resto]=lista;
+  main.innerHTML=`<a class="destaque${d.capa?'':' sem-img'}" href="${link(d)}">${d.capa?`<div class="img"${bg(d)}></div>`:''}<div><span class="rotulo">${esc(d.editoria)}</span><h1>${esc(d.titulo)}</h1>${d.linhaFina?`<p>${esc(d.linhaFina)}</p>`:''}${meta(d)}</div></a>`+
+    (resto.length?`<div class="secao-tit"><h2>Mais recentes</h2></div><div class="grade">${resto.map(card).join('')}</div>`:'');
+}).catch(()=>{document.getElementById('main').innerHTML='<div class="vazio">Não foi possível carregar os artigos.</div>'});
+</script>
+</body>
+</html>
