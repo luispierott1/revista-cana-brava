@@ -50,7 +50,7 @@ img{max-width:100%;height:auto;display:block}
 .filtro-tit a.voltar{font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--mute)}
 
 /* artigo */
-.art-cab{padding:56px 0 8px}
+.art-cab{padding-top:56px;padding-bottom:8px}
 .art-cab h1{font:800 clamp(36px,6vw,64px)/1.03 var(--serif-tit);letter-spacing:-.025em;margin:16px 0 18px}
 .art-cab .fina{font-size:23px;line-height:1.45;color:#45413a;margin:0 0 26px}
 .byline{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:16px 0;border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
@@ -59,7 +59,7 @@ img{max-width:100%;height:auto;display:block}
 .byline .autor em{font-weight:400;color:var(--mute);margin-right:4px}
 .art-capa{margin:34px auto 0;max-width:1000px}
 .art-capa figcaption,.corpo figcaption{font:400 13px/1.5 var(--sans);color:var(--mute);margin-top:8px}
-.corpo{padding:34px 0 20px}
+.corpo{padding-top:34px;padding-bottom:20px}
 .corpo>*{margin:0 0 1.15em}
 .corpo p:first-of-type::first-letter{font:800 4.1em/0.82 var(--serif-tit);float:left;margin:.06em .1em 0 0;color:var(--cana-esc)}
 .corpo h2{font:800 30px/1.15 var(--serif-tit);margin:1.7em 0 .6em;letter-spacing:-.01em}
