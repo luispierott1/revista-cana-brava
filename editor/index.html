@@ -631,8 +631,8 @@ function b64utf8(b){const bin=atob(b.replace(/\n/g,''));const u=new Uint8Array(b
 function autoGrow(el){el.style.height='auto';el.style.height=el.scrollHeight+'px'}
 
 /* ========== configuração ========== */
-const CFG_PADRAO={token:'',repo:'luispierott1/revista-cana-brava',branch:'main',site:'https://luispierott1.github.io/revista-cana-brava/',ai:'',model:'claude-haiku-5-5'};
-let CFG={...CFG_PADRAO,...(ls('cb-config')||{})};
+const CFG_PADRAO={token:'',repo:'luispierott1/revista-cana-brava',branch:'main',site:'https://revistacanabrava.com.br/',ai:'',model:'claude-haiku-5-5'};
+let CFG={...CFG_PADRAO,...(ls('cb-config')||{})};if(/github\.io\/revista-cana-brava/.test(CFG.site))CFG.site=CFG_PADRAO.site;
 const siteBase=()=>CFG.site.replace(/\/?$/,'/');
 const rawBase=slug=>`https://raw.githubusercontent.com/${CFG.repo}/${CFG.branch}/artigos/${slug}/`;
 
