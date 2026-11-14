@@ -33,7 +33,10 @@
     <h1>A imprensa que não cede às elites</h1>
     
     <div class="byline">
-      <span class="autor"><em>por</em><a href="../../?autor=redacao">Redação</a></span>
+      <div class="autor-col" style="display:flex;flex-direction:column;gap:2px">
+        <span class="autor"><em>por</em><a href="../../?autor=redacao">Redação</a></span>
+        
+      </div>
       <span class="meta">Editorial · 12 de novembro de 2026 · 1 min de leitura</span>
     </div>
   </header>
@@ -56,7 +59,15 @@
 </div></footer>
 <script>
 (function(){
-var c=document.querySelector('.corpo');var ps=c.querySelectorAll('p');if(ps.length){var f=document.createElement('span');f.className='fim';ps[ps.length-1].appendChild(f)}
+var c=document.querySelector('.corpo');
+var temTexto=function(x){return x&&x.tagName==='P'&&(x.textContent||'').trim().length>0};
+var filhos=[].slice.call(c.children),alvo=null;
+var hrs=filhos.filter(function(x){return x.tagName==='HR'});var ultHr=hrs[hrs.length-1];
+if(ultHr){var i=filhos.indexOf(ultHr);
+  var ehNota=function(x){var t=(x.textContent||'').trim().toLowerCase();return x.tagName==='UL'||x.tagName==='OL'||['fontes','notas','referências','referencias','bibliografia'].some(function(k){return t.indexOf(k)===0})};
+  if(filhos.slice(i+1).some(ehNota)){var antes=filhos.slice(0,i).filter(temTexto);alvo=antes[antes.length-1]||null}}
+if(!alvo){var ps=[].slice.call(c.querySelectorAll('p')).filter(function(x){return (x.textContent||'').trim().length>0});alvo=ps[ps.length-1]||null}
+if(alvo){var f=document.createElement('span');f.className='fim';alvo.appendChild(f)}
 document.getElementById('copiar').onclick=function(){var b=this;try{navigator.clipboard.writeText(location.href.split('#')[0]).then(function(){b.textContent='Link copiado'})}catch(e){}};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 fetch('../../data/artigos.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(l){
