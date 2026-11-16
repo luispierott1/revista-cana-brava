@@ -24,7 +24,7 @@
 <body>
 <header class="topo"><div class="wrap">
   <a class="marca" href="../../"><img src="../../assets/logo-light.png" alt="Cana Brava"></a>
-  <nav><a href="../../">Início</a><a href="../../?editoria=politica">Política</a></nav>
+  <nav><a href="../../">Início</a><a href="../../?editoria=politica">Política</a><a href="../../colunistas/">Colunistas</a></nav>
 </div></header>
 <main>
 <article>
@@ -61,6 +61,8 @@
 (function(){
 var c=document.querySelector('.corpo');
 var temTexto=function(x){return x&&x.tagName==='P'&&(x.textContent||'').trim().length>0};
+var modoFim="auto";
+if(!c.querySelector('.fim')&&modoFim!=='nenhum'){
 var filhos=[].slice.call(c.children),alvo=null;
 var hrs=filhos.filter(function(x){return x.tagName==='HR'});var ultHr=hrs[hrs.length-1];
 if(ultHr){var i=filhos.indexOf(ultHr);
@@ -68,6 +70,7 @@ if(ultHr){var i=filhos.indexOf(ultHr);
   if(filhos.slice(i+1).some(ehNota)){var antes=filhos.slice(0,i).filter(temTexto);alvo=antes[antes.length-1]||null}}
 if(!alvo){var ps=[].slice.call(c.querySelectorAll('p')).filter(function(x){return (x.textContent||'').trim().length>0});alvo=ps[ps.length-1]||null}
 if(alvo){var f=document.createElement('span');f.className='fim';alvo.appendChild(f)}
+}
 document.getElementById('copiar').onclick=function(){var b=this;try{navigator.clipboard.writeText(location.href.split('#')[0]).then(function(){b.textContent='Link copiado'})}catch(e){}};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 fetch('../../data/artigos.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(l){
