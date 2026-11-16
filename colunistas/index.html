@@ -35,19 +35,28 @@
 <body>
 <header class="topo"><div class="wrap">
   <a class="marca" href="../"><img src="../assets/logo-light.png" alt="Cana Brava"></a>
-  <nav><a href="../">Início</a><a href="./" class="on">Colunistas</a></nav>
+  <nav id="nav"><a href="../">Início</a><a href="./" class="on">Colunistas</a></nav>
 </div></header>
 <main class="wrap">
   <div class="filtro-tit"><a class="voltar" href="../">← Início</a><div class="rotulo" style="margin-top:22px">Quem escreve</div><h1>Colunistas</h1></div>
-  <div class="secao-tit"><h2>1 colunista</h2></div>
+  <div class="secao-tit"><h2>2 colunistas</h2></div>
   <div class="col-grade">
   <article class="colunista" data-autor="luis-pierott">
-    <img class="foto" src="luis-pierott-mwikvtzk.jpg" alt="Luís Pierott" loading="lazy">
+    <img class="foto" src="luis-pierott-mwiom9je.jpg" alt="Luís Pierott" loading="lazy">
     <div>
       <h2><a href="../?autor=luis-pierott">Luís Pierott</a></h2>
       <p class="desc">Campista, psicanalista e historiador de formação. Passa os dias escutando pessoas e as noites escrevendo sobre elas. É autor do livro “Quando o vento mudou” (2025). Aqui, volta a escuta para a política da própria cidade.</p>
       <p class="ult"></p>
       <a class="ver" href="../?autor=luis-pierott">Ler os textos →</a>
+    </div>
+  </article>
+  <article class="colunista" data-autor="bruno-lindolfo">
+    <img class="foto" src="bruno-lindolfo-mwiom9je.jpg" alt="Bruno Lindolfo" loading="lazy">
+    <div>
+      <h2><a href="../?autor=bruno-lindolfo">Bruno Lindolfo</a></h2>
+      <p class="desc">Campista em diáspora, médico e pós-graduado em psiquiatria. Passa os dias na escuta tentando não adoecer de utilidade, cultivando o sonho de não ter serventia. Aqui, faz do estranhamento crônica e da memória, teimosia.</p>
+      <p class="ult"></p>
+      <a class="ver" href="../?autor=bruno-lindolfo">Ler os textos →</a>
     </div>
   </article>
   </div>
@@ -61,6 +70,8 @@
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 fetch('../data/artigos.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(l){
   l.sort(function(a,b){return (b.data+b.publicadoEm).localeCompare(a.data+a.publicadoEm)});
+  var vistos={},eds=[];l.forEach(function(x){if(x.editoriaSlug&&!vistos[x.editoriaSlug]){vistos[x.editoriaSlug]=1;eds.push(x)}});
+  document.getElementById('nav').innerHTML='<a href="../">Início</a>'+eds.slice(0,6).map(function(x){return '<a href="../?editoria='+encodeURIComponent(x.editoriaSlug)+'">'+esc(x.editoria)+'</a>'}).join('')+'<a href="./" class="on">Colunistas</a>';
   [].forEach.call(document.querySelectorAll('.colunista'),function(el){
     var m=l.filter(function(x){return x.autorSlug===el.getAttribute('data-autor')});
     if(!m.length)return;
