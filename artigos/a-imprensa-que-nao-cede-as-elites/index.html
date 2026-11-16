@@ -24,7 +24,7 @@
 <body>
 <header class="topo"><div class="wrap">
   <a class="marca" href="../../"><img src="../../assets/logo-light.png" alt="Cana Brava"></a>
-  <nav><a href="../../">Início</a><a href="../../?editoria=politica">Política</a></nav>
+  <nav><a href="../../">Início</a><a href="../../?editoria=politica">Política</a><a href="../../colunistas/">Colunistas</a></nav>
 </div></header>
 <main>
 <article>
@@ -42,7 +42,7 @@
   </header>
   <figure class="art-capa wrap"><img src="capa-mwfhzdlh.jpg" alt=""></figure>
   <div class="corpo wrap estreito">
-<p>Campos dos Goytacazes foi feita de cana. Foi ela que ergueu os casarões, encheu os cofres de poucas famílias e definiu quem mandava na cidade e quem trabalhava para que os outros mandassem. As usinas fecharam, mas a lógica continuou: o poder ainda se decide longe de quem vive as suas consequências.<br>A revista Cana Brava nasce com o objetivo de olhar para esse poder de perto.</p><p>Somos uma revista semanal sobre Campos: a política da Câmara e da prefeitura, os acordos que não aparecem nas sessões, o dinheiro público e para onde ele vai, a cidade que fica de fora das fotos oficiais. Fazemos isso com reportagem, análise e colunas assinadas, sem rabo preso com governo, partido ou patrocinador.</p><p>Temos lado, e não escondemos: o de quem quer uma cidade mais justa, mais transparente e menos refém dos mesmos sobrenomes. Isso não nos dispensa de apurar, checar e corrigir quando errarmos. Pelo contrário, nos obriga.</p><p>Publicações semanais. Aqui no Instagram você encontra a chamada. O artigo completo fica em nosso site.</p><p>Leia, discorde, compartilhe. Uma cidade só muda quando passa a saber de si.</p>
+<p>Campos dos Goytacazes foi feita de cana. Foi ela que ergueu os casarões, encheu os cofres de poucas famílias e definiu quem mandava na cidade e quem trabalhava para que os outros mandassem. As usinas fecharam, mas a lógica continuou: o poder ainda se decide longe de quem vive as suas consequências.<br>A revista Cana Brava nasce com o objetivo de olhar para esse poder de perto.</p><p>Somos uma revista semanal sobre Campos: a política da Câmara e da prefeitura, os acordos que não aparecem nas sessões, o dinheiro público e para onde ele vai, a cidade que fica de fora das fotos oficiais. Fazemos isso com reportagem, análise e colunas assinadas, sem rabo preso com governo, partido ou patrocinador.</p><p>Temos lado, e não escondemos: o de quem quer uma cidade mais justa, mais transparente e menos refém dos mesmos sobrenomes. Isso não nos dispensa de apurar, checar e corrigir quando errarmos. Pelo contrário, nos obriga.</p><p>Publicações semanais. Aqui no Instagram você encontra a chamada. O artigo completo fica em nosso site.</p><p>Leia, discorde, compartilhe. Uma cidade só muda quando passa a saber de si.<span class="fim"></span></p>
   </div>
   <div class="wrap estreito">
     <div class="compartilhar">
@@ -61,6 +61,8 @@
 (function(){
 var c=document.querySelector('.corpo');
 var temTexto=function(x){return x&&x.tagName==='P'&&(x.textContent||'').trim().length>0};
+var modoFim="manual";
+if(!c.querySelector('.fim')&&modoFim!=='nenhum'){
 var filhos=[].slice.call(c.children),alvo=null;
 var hrs=filhos.filter(function(x){return x.tagName==='HR'});var ultHr=hrs[hrs.length-1];
 if(ultHr){var i=filhos.indexOf(ultHr);
@@ -68,6 +70,7 @@ if(ultHr){var i=filhos.indexOf(ultHr);
   if(filhos.slice(i+1).some(ehNota)){var antes=filhos.slice(0,i).filter(temTexto);alvo=antes[antes.length-1]||null}}
 if(!alvo){var ps=[].slice.call(c.querySelectorAll('p')).filter(function(x){return (x.textContent||'').trim().length>0});alvo=ps[ps.length-1]||null}
 if(alvo){var f=document.createElement('span');f.className='fim';alvo.appendChild(f)}
+}
 document.getElementById('copiar').onclick=function(){var b=this;try{navigator.clipboard.writeText(location.href.split('#')[0]).then(function(){b.textContent='Link copiado'})}catch(e){}};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 fetch('../../data/artigos.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(l){
