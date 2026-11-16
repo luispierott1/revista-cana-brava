@@ -24,7 +24,7 @@
 <body>
 <header class="topo"><div class="wrap">
   <a class="marca" href="./"><img src="assets/logo-light.png" alt="Cana Brava"></a>
-  <nav id="nav"><a href="./" class="on">Início</a></nav>
+  <nav id="nav"><a href="./" class="on">Início</a><a href="colunistas/">Colunistas</a></nav>
 </div></header>
 
 <main class="wrap" id="main"><div class="vazio">Carregando…</div></main>
@@ -48,7 +48,7 @@ fetch('data/artigos.json',{cache:'no-cache'}).then(r=>r.json()).then(lista=>{
   const q=new URLSearchParams(location.search);
   const eds=[...new Map(lista.map(a=>[a.editoriaSlug,a.editoria])).entries()].slice(0,6);
   const sel=q.get('editoria');
-  document.getElementById('nav').innerHTML=`<a href="./" class="${!q.toString()?'on':''}">Início</a>`+eds.map(([s,n])=>`<a href="?editoria=${encodeURIComponent(s)}" class="${sel===s?'on':''}">${esc(n)}</a>`).join('');
+  document.getElementById('nav').innerHTML=`<a href="./" class="${!q.toString()?'on':''}">Início</a>`+eds.map(([s,n])=>`<a href="?editoria=${encodeURIComponent(s)}" class="${sel===s?'on':''}">${esc(n)}</a>`).join('')+'<a href="colunistas/">Colunistas</a>';
   const main=document.getElementById('main');
   let filtro=null,f=lista;
   if(q.get('autor')){f=lista.filter(a=>a.autorSlug===q.get('autor'));filtro=f[0]?{r:f[0].genero==='Coluna'?'Coluna':'Autor',t:f[0].autor}:null}
