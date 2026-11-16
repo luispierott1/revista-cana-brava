@@ -57,7 +57,7 @@ fetch('data/artigos.json',{cache:'no-cache'}).then(r=>r.json()).then(lista=>{
   const q=new URLSearchParams(location.search);
   const eds=[...new Map(lista.map(a=>[a.editoriaSlug,a.editoria])).entries()].slice(0,6);
   const sel=q.get('editoria');
-  document.getElementById('nav').innerHTML=`<a href="./" class="${!q.toString()?'on':''}">Início</a>`+eds.map(([s,n])=>`<a href="?editoria=${encodeURIComponent(s)}" class="${sel===s?'on':''}">${esc(n)}</a>`).join('')+'<a href="colunistas/">Colunistas</a>';
+  document.getElementById('nav').innerHTML=`<a href="./" class="${!(sel||q.get('autor'))?'on':''}">Início</a>`+eds.map(([s,n])=>`<a href="?editoria=${encodeURIComponent(s)}" class="${sel===s?'on':''}">${esc(n)}</a>`).join('')+'<a href="colunistas/">Colunistas</a>';
   const main=document.getElementById('main');
   let filtro=null,f=lista;
   if(q.get('autor')){f=lista.filter(a=>a.autorSlug===q.get('autor'));filtro=f[0]?{r:f[0].genero==='Coluna'?'Coluna':'Autor',t:f[0].autor}:null}
@@ -68,7 +68,7 @@ fetch('data/artigos.json',{cache:'no-cache'}).then(r=>r.json()).then(lista=>{
     main.innerHTML=`<div class="filtro-tit"><a class="voltar" href="./">← Início</a><div class="rotulo" style="margin-top:22px">${filtro.r}</div><h1>${esc(filtro.t)}</h1></div>
     <div class="secao-tit"><h2>${f.length} ${f.length===1?'texto':'textos'}</h2></div><div class="grade">${f.map(card).join('')}</div>`;
     return}
-  if(q.toString()){main.innerHTML='<div class="vazio">Nada encontrado. <a href="./">Voltar ao início</a></div>';return}
+  if(q.get('autor')||sel){main.innerHTML='<div class="vazio">Nada encontrado. <a href="./">Voltar ao início</a></div>';return}
   const [d,...resto]=lista;
   main.innerHTML=`<a class="destaque${d.capa?'':' sem-img'}" href="${link(d)}">${d.capa?`<div class="img"${bg(d)}></div>`:''}<div><span class="rotulo">${esc(d.editoria)}</span><h1>${esc(d.titulo)}</h1>${d.linhaFina?`<p>${esc(d.linhaFina)}</p>`:''}${meta(d)}</div></a>`+
     (resto.length?`<div class="secao-tit"><h2>Mais recentes</h2></div><div class="grade">${resto.map(card).join('')}</div>`:'');
