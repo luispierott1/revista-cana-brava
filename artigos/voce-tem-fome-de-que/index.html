@@ -20,23 +20,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css">
-<style>
-.ouvir{display:flex;align-items:center;gap:14px;margin:6px 0 30px;padding:12px 14px 12px 12px;border:1px solid var(--linha);border-radius:999px;background:#fff}
-.ouvir[hidden]{display:none}
-.ouvir button{font:600 12px var(--mono);letter-spacing:.08em;cursor:pointer;border:0;background:none;color:var(--tinta)}
-.ouvir-play{flex:none;width:46px;height:46px;border-radius:50%!important;background:var(--cana)!important;display:flex;align-items:center;justify-content:center;transition:transform .15s}
-.ouvir-play:hover{transform:scale(1.06)}
-.ouvir-play svg{width:18px;height:18px;fill:var(--tinta)}
-.ouvir-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
-.ouvir-info b{font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--tinta)}
-.ouvir-info span{font:400 13px var(--sans);color:var(--mute)}
-.ouvir-barra{height:3px;background:var(--linha);border-radius:2px;overflow:hidden;margin-top:4px}
-.ouvir-barra i{display:block;height:100%;width:0;background:var(--cana);transition:width .3s}
-.ouvir-vel{flex:none;min-width:44px;padding:8px 6px!important;border:1px solid var(--linha)!important;border-radius:999px}
-.ouvir-stop{flex:none;width:34px;height:34px;padding:0!important;border-radius:50%;border:1px solid var(--linha)!important;font-size:11px!important}
-.corpo .lendo{background:rgba(233,162,59,.16);box-shadow:0 0 0 10px rgba(233,162,59,.16);border-radius:2px;transition:background .3s}
-@media(max-width:480px){.ouvir{gap:10px}.ouvir-info span{font-size:12px}}
-</style>
 </head>
 <body>
 <header class="topo"><div class="wrap">
@@ -57,12 +40,6 @@
       <span class="meta">Coluna · 16 de novembro de 2026 · 3 min de leitura</span>
     </div>
   </header>
-  <div class="wrap estreito"><div class="ouvir" id="ouvir" hidden>
-    <button class="ouvir-play" id="oPlay" type="button" aria-label="Ouvir este texto"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></svg></button>
-    <div class="ouvir-info"><b id="oTit">Ouvir este texto</b><span id="oSub">Leitura em voz alta</span><div class="ouvir-barra"><i id="oBar"></i></div></div>
-    <button class="ouvir-vel" id="oVel" type="button" title="Velocidade">1×</button>
-    <button class="ouvir-stop" id="oStop" type="button" title="Parar e voltar ao início" hidden>■</button>
-  </div></div>
   <figure class="art-capa wrap"><img src="capa-mwijztnb.jpg" alt=""><figcaption>Foto: Divulgação/Prefeitura de Campos</figcaption></figure>
   <div class="corpo wrap estreito">
 <p>Escrever sobre a minha cidade natal tem sido, antes de tudo, um exercício de insistência contra o esquecimento, ou, quem sabe, um esforço de lembrança. É um antagonismo curioso para se chegar a um fim quase igual, mas a posição do sujeito muda tudo: lembrar é o ato de quem banca a elaboração da própria história; já "não esquecer" é fincar o pé, recusando-se a ceder àquele trabalho exaustivo do psiquismo que tenta, por defesa, apagar o passado.</p><p>E é irônico notar como essa tentativa de apagamento fracassa miseravelmente quando o próprio cenário se recusa a colaborar. O passado insiste em retornar não apenas como fantasma interno, mas como paisagem e rotina. Já estou longe de Campos há quase quatro anos. Antes disso, foram seis anos fisicamente presente, porém sobrestado por aquela formação alienante que é fazer Medicina. A sensação que me assalta a cada retorno, portanto, é a de uma estagnação paralisante, um hiato de talvez uma década. Cultural e visualmente, a cidade não muda, te obrigando a tropeçar nas mesmas memórias que você tentou arquivar. É uma experiência que evoca com exatidão o unheimlich freudiano, o infamiliar. Aquele estranhamento perturbador diante do que deveria ser o nosso lar e porto seguro, mas que agora nos parece alienígena e assombroso justamente por permanecer congelado no tempo, feito um sintoma que não cede, enquanto nós, do lado de fora, mudamos.</p><p>Campos é uma cidade que já viveu o início, o meio e agora amarga a ressaca de sua própria maldição mineral. Houve o tempo da bonança inesgotável dos royalties, uma era de excessos em que o então prefeito ficou conhecido como o "prefeito canecão". Eram dias de gastos estratosféricos com shows e espetáculos, culminando até no carnaval, em que a Marquês de Sapucaí serviu de palco para o desfile da primeira-dama da época. A cultura, ou pelo menos o que se vendia como tal, era um espetáculo de ostentação bancado por um cofre que parecia não ter fundo.</p><p>E teve um intermezzo, esse talvez o mais esquecível e talvez por isso lembrável. Entre o dinheiro demais e a falta dele é sempre possível ser pior. Política, mais precisamente a falta dela, feita com desapreço por ela, com negativa a ela e a tudo que ela representa: paixão, desejo, povo. Sim, falo daquele grupo de tecnocratas do baixo Pelinca que tomou a prefeitura de maneira culposa, sem desejo de governar, a reboque daquele caldo de cultura pavoroso do Brasil da época. Um bolsonarismo de sapatênis. Tão semelhante que acabou, que ironia, escondido lá na ALERJ.</p><p>Hoje, o cenário é de terra arrasada. O setor cultural da cidade repudia uma redução drástica de R$ 2,5 milhões no orçamento previsto para 2027. A previsão, que era de R$ 14 milhões em 2026, cairá para R$ 11,5 milhões. Os representantes da área falam em um verdadeiro cenário de "caos", marcado pelo fechamento de dois teatros, atrasos constantes nos pagamentos de artistas e na impossibilidade de realizar concursos ou editais. Como bem resumiu a presidente do Conselho Municipal de Cultura, a decadência da cultura de Campos parece mesmo estar datada.</p><p>Esse corte sangrento reflete muito mais do que uma mera readequação financeira; é o sintoma de um cortejo fúnebre da cultura pós-moderna, da lavra do mesmo desapreço contemporâneo por tudo aquilo que não se meça pela utilidade imediata, pela produtividade cega ou pela vocação de gerar riqueza material. Em tempos de pragmatismo doentio, já não interessa cultivar o ócio e a criação. O que não tem "serventia" mercadológica é descartado, esquecendo-se de que é exatamente o inútil que alimenta a alma. Sim, eu tô falando precisamente de Gosto. Essa bússola estética que nos permite desejar algo além da mera sobrevivência produtiva que almoça e janta.</p><p>Quando uma cidade que já jorrou dinheiro para o espetáculo efêmero agora fecha seus teatros e asfixia seus artistas, a pergunta que ecoa nas ruas vazias de significado é inescapável: afinal, você tem fome de quê?<span class="fim"></span></p><hr><p><em>Bruno Lindolfo é médico, pós-graduado em psiquiatria. Foi forjado num estado em que todos os governadores recentes (aparentemente também o futuro) foram impichados de alguma forma, e hoje deve suportar a realidade próxima de ter Moro como governador, mostrando que o fundo do poço sempre pode ter alçapão.</em></p>
@@ -94,56 +71,6 @@ if(ultHr){var i=filhos.indexOf(ultHr);
 if(!alvo){var ps=[].slice.call(c.querySelectorAll('p')).filter(function(x){return (x.textContent||'').trim().length>0});alvo=ps[ps.length-1]||null}
 if(alvo){var f=document.createElement('span');f.className='fim';alvo.appendChild(f)}
 }
-/* leitura em voz alta (voz do próprio aparelho) */
-(function(){
-  var ss=window.speechSynthesis;if(!ss||!window.SpeechSynthesisUtterance)return;
-  var box=document.getElementById('ouvir'),bPlay=document.getElementById('oPlay'),bVel=document.getElementById('oVel'),bStop=document.getElementById('oStop');
-  var tit=document.getElementById('oTit'),sub=document.getElementById('oSub'),barra=document.getElementById('oBar');
-  var ICO_PLAY='<svg viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></svg>',ICO_PAUSA='<svg viewBox="0 0 24 24"><path d="M6 4.5h4.5v15H6zM13.5 4.5H18v15h-4.5z"/></svg>';
-  function frases(t){
-    var p=(t.match(/[^.!?…;]+[.!?…;]+[”»"')]*|[^.!?…;]+$/g)||[t]).map(function(x){return x.trim()}).filter(Boolean),out=[],buf='';
-    p.forEach(function(f){
-      while(f.length>260){var k=f.lastIndexOf(', ',240);if(k<80)k=f.lastIndexOf(' ',240);if(k<1)k=240;out.push((buf?buf+' ':'')+f.slice(0,k+1).trim());buf='';f=f.slice(k+1).trim()}
-      if(buf&&(buf+' '+f).length>220){out.push(buf);buf=f}else buf=buf?buf+' '+f:f});
-    if(buf)out.push(buf);return out}
-  var partes=[];
-  function add(el,t){t=(t||'').split(String.fromCharCode(160)).join(' ').trim();if(t)frases(t).forEach(function(f){partes.push({el:el,t:f})})}
-  var cab=document.querySelector('.art-cab');
-  add(null,(cab.querySelector('h1')||{}).textContent);
-  var fina=cab.querySelector('.fina');if(fina)add(null,fina.textContent);
-  add(null,'Por '+"Bruno Lindolfo"+'.');
-  [].forEach.call(c.querySelectorAll('p,h2,h3,h4,blockquote,li'),function(el){
-    if(el.closest('figure')||(el.tagName!=='BLOCKQUOTE'&&el.closest('blockquote'))||(el.tagName==='P'&&el.closest('li')))return;
-    add(el,el.textContent)});
-  if(partes.length<4)return;
-  var total=partes.reduce(function(s,x){return s+x.t.length},0),acum=[],ac=0;partes.forEach(function(x){acum.push(ac);ac+=x.t.length});
-  var VELS=[1,1.25,1.5,.85],vi=0,i=0,tocando=false,comecou=false,ficha=0,voz=null,atual=null;
-  function minutos(desde){var resta=total-(acum[desde]||0);return Math.max(1,Math.round(resta/(15*60*VELS[vi])))}
-  function escolherVoz(){
-    var vs=ss.getVoices().filter(function(v){return /^pt/i.test(v.lang)});if(!vs.length)return null;
-    var nota=function(v){var n=v.name+' '+v.lang,s=0;if(/pt[-_]BR/i.test(v.lang))s+=10;if(/natural|online|neural|premium|enhanced/i.test(n))s+=6;if(/google/i.test(n))s+=4;if(/francisca|thalita|antonio|luciana|felipe/i.test(n))s+=3;if(v.localService===false)s+=1;return s};
-    return vs.sort(function(a,b){return nota(b)-nota(a)})[0]}
-  voz=escolherVoz();if(ss.onvoiceschanged!==undefined)ss.onvoiceschanged=function(){voz=escolherVoz()};
-  function marcar(el){if(atual===el)return;if(atual)atual.classList.remove('lendo');atual=el;if(!el)return;el.classList.add('lendo');
-    var r=el.getBoundingClientRect();if(r.top>innerHeight-80||r.bottom<60)el.scrollIntoView({behavior:'smooth',block:'center'})}
-  function pintar(){bPlay.innerHTML=tocando?ICO_PAUSA:ICO_PLAY;bPlay.setAttribute('aria-label',tocando?'Pausar':'Ouvir este texto');
-    tit.textContent=tocando?'Ouvindo':(comecou?'Pausado':'Ouvir este texto');
-    sub.textContent=(i>0?'Faltam cerca de ':'Cerca de ')+minutos(i)+' min'+(voz?'':' · voz do seu aparelho');
-    barra.style.width=(100*(acum[i]||0)/total)+'%';bStop.hidden=!comecou}
-  function falar(){
-    if(i>=partes.length){tocando=false;comecou=false;i=0;marcar(null);pintar();tit.textContent='Fim da leitura';return}
-    var minha=++ficha,p=partes[i],u=new SpeechSynthesisUtterance(p.t);
-    u.lang='pt-BR';if(voz)u.voice=voz;u.rate=VELS[vi];
-    u.onend=function(){if(minha!==ficha||!tocando)return;i++;pintar();falar()};
-    u.onerror=function(e){if(minha!==ficha||!tocando)return;if(e&&(e.error==='interrupted'||e.error==='canceled'))return;i++;falar()};
-    marcar(p.el);ss.speak(u)}
-  function parar(){ficha++;tocando=false;ss.cancel()}
-  bPlay.onclick=function(){if(tocando){parar();pintar();return}ss.cancel();tocando=true;comecou=true;pintar();falar()};
-  bVel.onclick=function(){vi=(vi+1)%VELS.length;bVel.textContent=String(VELS[vi]).replace('.',',')+'×';if(tocando){parar();tocando=true;falar()}pintar()};
-  bStop.onclick=function(){parar();comecou=false;i=0;marcar(null);pintar()};
-  window.addEventListener('pagehide',function(){ss.cancel()});
-  ss.cancel();box.hidden=false;pintar();
-})();
 document.getElementById('copiar').onclick=function(){var b=this;try{navigator.clipboard.writeText(location.href.split('#')[0]).then(function(){b.textContent='Link copiado'})}catch(e){}};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 fetch('../../data/artigos.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(l){
