@@ -25,6 +25,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css">
+<style>
+.comentarios{margin-top:56px;padding-top:28px;border-top:1px solid var(--linha,#ddd6c6)}
+.comentarios .cm-tit{font:800 28px/1.1 var(--serif-tit,Georgia,serif);letter-spacing:-.01em;margin:0 0 20px}
+.comentarios .cm-n{color:var(--mute,#777);font-weight:600}
+.cm-lista{list-style:none;margin:0 0 32px;padding:0}
+.cm-item{padding:16px 0;border-bottom:1px solid var(--linha,#ddd6c6)}
+.cm-cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:6px}
+.cm-cab b{font:600 15px var(--sans,system-ui,sans-serif);color:var(--tinta,#151412)}
+.cm-cab time{font:500 12px var(--sans,system-ui,sans-serif);color:var(--mute,#777)}
+.cm-item p{margin:0;font-size:17px;line-height:1.55;overflow-wrap:anywhere}
+.cm-vazio{padding:12px 0;font:400 15px var(--sans,system-ui,sans-serif);color:var(--mute,#777)}
+.cm-form{display:flex;flex-direction:column;gap:6px;font-family:var(--sans,system-ui,sans-serif)}
+.cm-form label{font:600 11px var(--mono,monospace);letter-spacing:.14em;text-transform:uppercase;color:var(--mute,#777);margin-top:8px}
+.cm-form input,.cm-form textarea{font:400 16px/1.5 var(--sans,system-ui,sans-serif);padding:10px 12px;border:1px solid var(--linha,#ccc);border-radius:8px;background:#fff;color:var(--tinta,#151412);width:100%;box-sizing:border-box}
+.cm-form textarea{resize:vertical;min-height:110px}
+.cm-form input:focus,.cm-form textarea:focus{outline:2px solid var(--cana,#e8c547);outline-offset:1px}
+.cm-hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0}
+.cm-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:10px}
+.cm-acoes .btn{width:auto}
+.cm-st{font-size:14px;color:var(--mute,#777)}
+.cm-st.erro{color:#b3261e}
+.cm-aviso{font-size:13px;color:var(--mute,#777);margin:6px 0 0}
+</style>
 </head>
 <body>
 <header class="topo"><div class="wrap">
@@ -45,7 +68,7 @@
       <span class="meta">Coluna · 16 de novembro de 2026 · 4 min de leitura</span>
     </div>
   </header>
-  <figure class="art-capa wrap"><img src="capa-mwjtk9th.jpg" alt=""><figcaption>Foto: Divulgação/Amazon</figcaption></figure>
+  <figure class="art-capa wrap"><div style="display:grid;grid-template-columns:minmax(0,max-content);justify-content:center"><img src="capa-mwjtk9th.jpg" alt=""><figcaption style="width:0;min-width:100%">Foto: Divulgação/Amazon</figcaption></div></figure>
   <div class="corpo wrap estreito">
 <p>O <em>avesso da pele</em> tem cerca de 200 páginas e um professor no centro. Henrique, pai do narrador, dá aulas de literatura numa escola pública de Porto Alegre e morre numa abordagem policial. O romance de Jeferson Tenório ganhou o Jabuti em 2021 e chegou às bibliotecas das escolas estaduais pelo MEC, depois de aprovado por uma banca de professores, mestres e doutores em literatura e língua portuguesa, junto com outros 530 títulos. No Paraná, ficou nas estantes até o início de março de 2024. Naquela semana, a Secretaria da Educação mandou recolher os cerca de 2 mil exemplares que havia recebido. O ofício enviado aos núcleos regionais de ensino levava a assinatura do diretor de Educação da pasta, Anderfábio Oliveira dos Santos.</p><p>Na segunda-feira, 16 de novembro, Anderfábio mudou de cargo e de estado. Num evento na Firjan, no Rio, o governador eleito Douglas Ruas, do PL, o apresentou como o próximo secretário estadual de Educação. Ele assume em janeiro. Ruas contou que os profissionais da educação com quem conversou estão satisfeitos com o nome e explicou a escolha: o Rio, disse, precisa “estar aberto a ouvir modelos que funcionaram”. No mesmo dia, o Sindicato Estadual dos Profissionais de Educação, o Sepe, rejeitou a indicação.</p><p>O episódio do livro durou pouco mais de um mês. O modelo de gestão em que ele aconteceu é o que Ruas promete trazer para o Rio.</p><p>Anderfábio é professor de matemática por formação. Tem mestrado em Gestão e Avaliação da Educação Pública pela UFJF e especialização em Educação Especial e em Gestão Escolar. Entrou na secretaria paranaense em 2006 e fez carreira na casa até chegar à diretoria de Educação no governo Ratinho Junior, do PSD. Ocupava esse cargo quando o livro de Tenório saiu das estantes.</p><p>A reação foi rápida. Tenório chamou a medida de “antidemocrática”. Deputados federais do PSOL e da Rede pediram ao Ministério Público Federal que investigasse o governador, o secretário de Educação, Roni Miranda, e Anderfábio. A Companhia das Letras, editora do romance, entrou com mandado de segurança. Goiás e Mato Grosso do Sul também mandaram recolher seus exemplares. Em entrevista à <em>Gazeta do Povo</em>, Roni Miranda negou que houvesse censura: “Censura seria se o governo do Paraná proibisse a venda do livro.” A secretaria falava em análise pedagógica e em trechos impróprios para menores de 18 anos. Em abril, os exemplares voltaram às escolas, com a recomendação de que a obra fosse indicada a adultos e a alunos da EJA. Nas livrarias, onde ninguém havia proibido nada, as vendas do romance subiram 400%.</p><p>A nota do Sepe sobre o novo secretário trata de outro assunto. Ela lista o que o sindicato atribui à gestão paranaense da qual Anderfábio fez parte: o fim da licença especial, salários congelados, o reajuste da data-base pago só em parte, perdas nos planos de carreira, aumento da contribuição previdenciária, a terceirização dos funcionários de escola e o repasse da administração de escolas estaduais a empresas privadas. Fala também em militarização de unidades, na troca de livros didáticos por apostilas e no esvaziamento da gestão democrática. E lembra um episódio de junho de 2024. No segundo dia de uma greve contra o projeto que entregava a gestão de escolas a empresas, a Procuradoria-Geral do Estado do Paraná pediu à Justiça a prisão da presidente da APP-Sindicato, a professora Walkiria Olegário Mazeto, por desobediência, e o aumento da multa diária contra o sindicato de 10 mil para 100 mil reais. A greve terminou no dia seguinte.</p><p>O Sepe é parte interessada, e a lista é dele. Em muitos pontos, porém, ela coincide com o programa do governador eleito. Ruas prometeu na campanha até 200 escolas no modelo cívico-militar. Segundo o sindicato, o Paraná passou das 200 sob a gestão de que Anderfábio participou. O governador eleito diz que vai apresentar o modelo à comunidade escolar, com visitas às unidades que já funcionam, e implantá-lo se for aprovado. A consulta foi anunciada no mesmo evento que apresentou o secretário.</p><p>O mandato que vai empossar Anderfábio passou mais de um mês em disputa. No primeiro turno, em 4 de outubro, Ruas teve 49,27% dos votos válidos, e Eduardo Paes, do PSD, 42,76%. Em 8 de outubro, o TSE anulou, por cinco votos a dois, os 274 411 votos dados a Anthony Garotinho, que concorreu com a candidatura indeferida, e o percentual de Ruas subiu para 50,88%, o suficiente para dispensar o segundo turno. Seis dias depois, o PSD, partido de Paes e também de Ratinho Junior, o governador a quem Anderfábio serviu no Paraná, pediu ao Supremo Tribunal Federal que restabelecesse a disputa. Na quinta-feira, 12 de novembro, o ministro Cristiano Zanin negou a liminar. Escreveu que via no pedido a “utilização indevida da ADPF como sucedâneo recursal”. A ação continua no Supremo, à espera de pareceres da AGU e da PGR, mas Ruas segue governador eleito.</p><p>Na Firjan, Ruas garantiu que o novo secretário vai trabalhar com diálogo junto à categoria. Anderfábio vem de um governo que respondeu a uma greve de professores com um pedido de prisão e a um romance premiado com um ofício de recolhimento. O que o Rio foi buscar no Paraná não é um gestor, é um método, e esse método já mostrou o que faz com aquilo que o incomoda: tira da estante.<span class="fim"></span></p>
   </div>
@@ -56,6 +79,19 @@
     </div>
   </div>
 </article>
+<section class="comentarios wrap estreito" id="comentarios" aria-labelledby="cmTit">
+  <h2 class="cm-tit" id="cmTit">Comentários <span class="cm-n"></span></h2>
+  <ol class="cm-lista"><li class="cm-vazio">Carregando comentários…</li></ol>
+  <form class="cm-form" novalidate>
+    <label for="cmNome">Seu nome</label>
+    <input id="cmNome" name="nome" maxlength="60" placeholder="Como você quer aparecer" autocomplete="nickname">
+    <label for="cmTexto">Comentário</label>
+    <textarea id="cmTexto" name="texto" rows="4" maxlength="3000" placeholder="Escreva seu comentário"></textarea>
+    <input class="cm-hp" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="cm-acoes"><button class="btn" type="submit">Publicar comentário</button><span class="cm-st" role="status" aria-live="polite"></span></div>
+    <p class="cm-aviso">Comente com o nome que quiser. Comentários ofensivos ou com ataques pessoais podem ser apagados.</p>
+  </form>
+</section>
 <section class="wrap mais" id="mais"></section>
 </main>
 <footer class="rodape"><div class="wrap">
@@ -89,5 +125,40 @@ fetch('../../data/artigos.json',{cache:'no-cache'}).then(function(r){return r.js
 }).catch(function(){});
 })();
 </script>
+<script>(function cbComentarios(SB,artigo){
+  var box=document.getElementById('comentarios');if(!box)return;
+  var api=SB.url.replace(/\/+$/,'')+'/rest/v1/comentarios';
+  var H={'apikey':SB.key};if(/^eyJ/.test(SB.key))H.Authorization='Bearer '+SB.key;
+  var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  var lista=box.querySelector('.cm-lista'),n=box.querySelector('.cm-n'),form=box.querySelector('form'),st=box.querySelector('.cm-st'),bt=form.querySelector('button');
+  var nome=form.elements.nome,texto=form.elements.texto,itens=[],ultimo=0;
+  try{nome.value=localStorage.getItem('cb-nome-comentario')||''}catch(e){}
+  var quando=function(iso){try{var d=new Date(iso);return d.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'})+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}catch(e){return''}};
+  var aviso=function(m,erro){st.textContent=m;st.className='cm-st'+(erro?' erro':'')};
+  function desenhar(){
+    n.textContent=itens.length?'('+itens.length+')':'';
+    lista.innerHTML=itens.length?itens.map(function(c){return '<li class="cm-item"><div class="cm-cab"><b>'+esc(c.nome)+'</b><time datetime="'+esc(c.criado_em)+'">'+esc(quando(c.criado_em))+'</time></div><p>'+esc(c.texto).replace(/\n/g,'<br>')+'</p></li>'}).join(''):'<li class="cm-vazio">Ninguém comentou ainda. Seja a primeira pessoa.</li>';
+  }
+  fetch(api+'?select=id,nome,texto,criado_em&artigo=eq.'+encodeURIComponent(artigo)+'&order=criado_em.asc&limit=1000',{headers:H,cache:'no-store'})
+    .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(l){itens=l||[];desenhar()})
+    .catch(function(){lista.innerHTML='<li class="cm-vazio">Não foi possível carregar os comentários agora.</li>'});
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    if(form.elements.site.value)return;
+    var nm=nome.value.replace(/\s+/g,' ').trim(),tx=texto.value.replace(/\r/g,'').replace(/\n{3,}/g,'\n\n').trim();
+    if(!nm){aviso('Escreva um nome.',1);nome.focus();return}
+    if(!tx){aviso('Escreva o comentário.',1);texto.focus();return}
+    if(Date.now()-ultimo<20000){aviso('Espere alguns segundos antes de comentar de novo.',1);return}
+    bt.disabled=true;aviso('Enviando…');
+    var h={'Content-Type':'application/json','Prefer':'return=representation'};for(var k in H)h[k]=H[k];
+    fetch(api,{method:'POST',headers:h,body:JSON.stringify({artigo:artigo,nome:nm.slice(0,60),texto:tx.slice(0,3000)})})
+      .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(l){
+        ultimo=Date.now();try{localStorage.setItem('cb-nome-comentario',nm)}catch(e){}
+        if(l&&l[0])itens.push(l[0]);desenhar();texto.value='';aviso('Comentário publicado. Obrigado!');
+        var u=lista.lastElementChild;if(u&&u.scrollIntoView)u.scrollIntoView({behavior:'smooth',block:'nearest'});
+      }).catch(function(){aviso('Não consegui publicar. Tente de novo em instantes.',1)})
+      .then(function(){bt.disabled=false});
+  });
+})({"url":"https://bvqgfbsppoqobshzqnqf.supabase.co","key":"sb_publishable_lwWDm2O-GLirIlruxP-5-Q_zzMBnOqk"},"o-avesso-do-secretario");</script>
 </body>
 </html>
